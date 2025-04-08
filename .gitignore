@@ -172,3 +172,7 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+
+nlp/rag_database_routing/rag_database_routing.py
+nlp/rag_chain/app.py

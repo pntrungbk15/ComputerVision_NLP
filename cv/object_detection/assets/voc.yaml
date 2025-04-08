@@ -1,0 +1,249 @@
+EXP_NAME: YOLOv1
+API_KEY: 'c1d91b9d8d01d41c563d2ed88216016fef6fdf5a' # tài khoản wandb
+SEED: 110795
+
+DATASET:
+    datadir: 'datasets'
+    target: 'voc'
+    resize: 640 # height = width
+    data_type: 'voc' # 'yolo', 'voc', 'coco'
+    convert_coco: False
+    keep_difficult: True
+    trans_type: "yolo_trans" # yolo_trans, ssd_trans
+    yolo_trans: 
+        use_mosaic: True
+        use_mixup: True
+        use_copy_paste: True
+        mosaic_prob: 1.0
+        mosaic_img9_prob: 0.7
+        mixup_prob: 0.15
+        copy_paste_prob: 1.0
+        affine_params:
+            degrees: 10.0
+            translate: 0.1
+            scale: [0.5, 2.0]
+            shear: 2.0
+            perspective: 0.0
+            hsv_h: 0.015
+            hsv_s: 0.7
+            hsv_v: 0.4
+    ssd_trans:
+        distort_prob: 0.5
+        iou_crop_prob: 0.8
+        horizon_flip_prob: 0.5
+    box_format: "xyxy" # "xywh"
+    class_names:
+    - aeroplane
+    - bicycle
+    - bird
+    - boat
+    - bottle
+    - bus
+    - car
+    - cat
+    - chair
+    - cow
+    - diningtable
+    - dog
+    - horse
+    - motorbike
+    - person
+    - pottedplant
+    - sheep
+    - sofa
+    - train
+    - tvmonitor
+    
+DATALOADER:
+    batch_size: 8
+    batch_size_base: 64
+    num_workers: 0
+
+MODEL:
+    model_type: 'yolov1_rn18'
+    yolov1_rn18:
+        # backbone                       
+        backbone: 'resnet18'
+        pretrained: True
+        stride: [32]
+        max_stride: 32
+        # neck
+        neck_expand_ratio: 0.5
+        spp_pooling_size: 5
+        neck_act: 'lrelu'
+        neck_norm: 'BN'
+        neck_depthwise: False
+        # head
+        head_dim: 512
+        head_act: 'lrelu'
+        head_norm: 'BN'
+        num_cls_head: 2
+        num_reg_head: 2
+        head_depthwise: False
+    
+    yolov1_rn34:
+        # backbone                       
+        backbone: 'resnet34'
+        pretrained: True
+        stride: [32]
+        max_stride: 32
+        # neck
+        neck_expand_ratio: 0.5
+        spp_pooling_size: 5
+        neck_act: 'lrelu'
+        neck_norm: 'BN'
+        neck_depthwise: False
+        # head
+        head_act: 'lrelu'
+        head_norm: 'BN'
+        num_cls_head: 2
+        num_reg_head: 2
+        head_depthwise: False
+
+    yolov1_rn50:
+        # backbone                       
+        backbone: 'resnet50'
+        pretrained: True
+        stride: [32]
+        max_stride: 32
+        # neck
+        neck_expand_ratio: 0.5
+        spp_pooling_size: 5
+        neck_act: 'lrelu'
+        neck_norm: 'BN'
+        neck_depthwise: False
+        # head
+        head_act: 'lrelu'
+        head_norm: 'BN'
+        num_cls_head: 2
+        num_reg_head: 2
+        head_depthwise: False
+
+    yolov1_rn101:
+        # backbone                       
+        backbone: 'resnet101'
+        pretrained: True
+        stride: [32]
+        max_stride: 32
+        # neck
+        neck_expand_ratio: 0.5
+        spp_pooling_size: 5
+        neck_act: 'lrelu'
+        neck_norm: 'BN'
+        neck_depthwise: False
+        # head
+        head_act: 'lrelu'
+        head_norm: 'BN'
+        num_cls_head: 2
+        num_reg_head: 2
+        head_depthwise: False
+
+    yolov1_rn152:
+        # backbone                       
+        backbone: 'resnet152'
+        pretrained: True
+        stride: [32]
+        max_stride: 32
+        # neck
+        neck_expand_ratio: 0.5
+        spp_pooling_size: 5
+        neck_act: 'lrelu'
+        neck_norm: 'BN'
+        neck_depthwise: False
+        # head
+        head_act: 'lrelu'
+        head_norm: 'BN'
+        num_cls_head: 2
+        num_reg_head: 2
+        head_depthwise: False
+
+MODEL_EMA:
+    use_ema: True
+    ema_decay: 0.9998
+    ema_tau: 2000
+
+TRAIN:
+    epochs: 100
+    warmup_epoch: 3
+    no_aug_epoch: 20
+    multi_scale_range: [0.5, 2.0]
+    min_tgt_size: 8
+    fp16: True
+    clip_max_norm: 35.0
+    use_gpu: True
+    use_wandb: True
+    visualize_aug: True
+    is_vis_train: True
+    show_class: False
+    num_sample: 5
+    export_to_onnx: True
+    # base weigth
+    base_weight: 'models/base_weights'
+    # decode
+    conf_thresh: 0.5
+    nms_thresh: 0.25
+    topk: 300
+    no_decode: False
+    # loss
+    iou_type: "piou" # ["giou", "diou", "ciou", "siou", "eiou", "mdpiou", "piou", "piou2"]
+    loss_cls_weight: 1.0
+    loss_obj_weight: 1.0
+    loss_box_weight: 5.0
+
+TEST:
+    # decode
+    conf_thresh: 0.5
+    nms_thresh: 0.25
+    topk: 300
+    square_size: 2560
+    mag_ratio: 1.75
+    no_decode: True
+    is_anchor: False
+    vis_thresh: 0.3
+
+VIDEO:
+    track_thresh: 0.5
+    track_buffer: 30
+    frame_rate: 30
+    match_thresh: 0.8
+    mot20: False
+    aspect_ratio_thresh: 1.6
+    min_box_area: 10
+    is_visual_class: False
+
+OPTIMIZER:
+    optimizer_name: 'Adamw'
+    base_lr: 0.001
+    min_lr_ratio: 0.01
+    min_lr: 0.01 # min_lr  = base_lr * min_lr_ratio
+    momentum: 0.9
+    weight_decay: 0.05
+
+SCHEDULER:
+    lr_scheduler_name: "cosine"
+    warmup_bias_lr: 0.1
+
+LOG:
+    log_interval: 1
+    eval_interval: 1
+
+RESULT:
+    savedir: 'saved_model'
+    saveall: 'save_all_result'
+    save_test_img: 'save_test_image'
+    saveallonnx: 'save_all_result_onnx'
+    save_test_img_onnx: 'save_test_img_onnx'
+    vis_test_dir: 'vis_test_dir'
+    vis_train_dir: 'vis_train_dir'
+    save_track_camera: 'save_track_camera'
+    save_track_camera_onnx: 'save_track_camera_onnx'
+    save_track_video: 'save_track_video'
+    save_track_video_onnx: 'save_track_video_onnx'
+
+RESUME:
+    option: True
+    opset_version: 13
+    bestauxmodel: 'best_aux_model.pth' 
+    onnxauxmodel: 'best_aux_model.onnx'
+    bestmodel: 'best_model.pth'
+    onnxmodel: 'best_model.onnx'

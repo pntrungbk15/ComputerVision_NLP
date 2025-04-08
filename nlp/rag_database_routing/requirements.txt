@@ -1,0 +1,13 @@
+langchain
+langchain-community
+langchain-core
+qdrant-client
+streamlit
+pypdf
+sentence-transformers
+phidata
+langchain-openai
+langgraph
+duckduckgo-search
+pydantic
+agno
