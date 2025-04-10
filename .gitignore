@@ -174,5 +174,6 @@ cython_debug/
 .pypirc
 
 
-nlp/rag_database_routing/rag_database_routing.py
-nlp/rag_chain/app.py
+nlp/rag/rag_database_routing/rag_database_routing.py
+nlp/rag/rag_chain/app.py
+nlp/ai_agent/ai_data_analysis_agent/ai_data_analyst.py
