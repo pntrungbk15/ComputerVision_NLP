@@ -1,0 +1,12 @@
+raglite
+pydantic
+sqlalchemy
+psycopg2-binary
+openai
+cohere
+pypdf
+python-dotenv
+rerankers
+spacy
+streamlit
+anthropic

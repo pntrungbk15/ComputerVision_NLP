@@ -1,0 +1,5 @@
+streamlit
+e2b-code-interpreter
+agno
+Pillow
+google-genai

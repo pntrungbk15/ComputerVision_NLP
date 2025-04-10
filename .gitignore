@@ -177,3 +177,5 @@ cython_debug/
 nlp/rag/rag_database_routing/rag_database_routing.py
 nlp/rag/rag_chain/app.py
 nlp/ai_agent/ai_data_analysis_agent/ai_data_analyst.py
+nlp/rag/hybrid_search_rag/main.py
+nlp/ai_agent/ai_coding_agent_o3-mini/ai_coding_agent_o3.py
